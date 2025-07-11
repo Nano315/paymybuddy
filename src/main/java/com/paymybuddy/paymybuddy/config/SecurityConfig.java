@@ -1,38 +1,62 @@
 package com.paymybuddy.paymybuddy.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.Customizer;
+import com.paymybuddy.paymybuddy.config.security.JwtAuthenticationFilter;
+import com.paymybuddy.paymybuddy.user.service.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.*;
+import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.*;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+
 
 @Configuration
+@EnableMethodSecurity // pour @PreAuthorize plus tard
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Bean // encodeur BCrypt
+    private final CustomUserDetailsService uds;
+    private final JwtAuthenticationFilter jwtFilter;
+
+    /* -------- Password encoder -------- */
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean // exposer l’AuthenticationManager
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration cfg) throws Exception {
+    /* -------- Auth provider (DAO) -------- */
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(uds);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
+    /* -------- AuthenticationManager (exposé) -------- */
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration cfg) throws Exception {
         return cfg.getAuthenticationManager();
     }
 
+    /* -------- Filter chain -------- */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/users").permitAll()
-                        .requestMatchers("/api/v1/connections/**").permitAll()
-                        .requestMatchers("/api/v1/transactions/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/error").permitAll()
                         .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // pas de httpBasic() : on utilise exclusivement le token
         return http.build();
     }
 }
