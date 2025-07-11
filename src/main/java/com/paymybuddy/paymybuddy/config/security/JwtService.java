@@ -1,23 +1,23 @@
 package com.paymybuddy.paymybuddy.config.security;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
-import java.util.Date;
-
 import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Service
 public class JwtService {
 
-    @Value("${app.jwt.secret:my-super-secret-key}")
+    @Value("${app.jwt.secret}")
     private String secret;
 
-    private Key key() {
-        return Keys.hmacShaKeyFor(secret.getBytes());
+    private SecretKey key() {
+        byte[] bytes = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(bytes);
     }
 
     public String generate(String subject, Integer userId) {
@@ -31,23 +31,17 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
-        return parse(token).getBody().getSubject();
+        return Jwts.parser().verifyWith(key()).build()
+                .parseSignedClaims(token)
+                .getPayload().getSubject();
     }
 
     public boolean isValid(String token) {
         try {
-            parse(token);
+            Jwts.parser().verifyWith(key()).build().parseSignedClaims(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
-    }
-
-    private Jws<Claims> parse(String token) {
-        return Jwts.parser()
-                .verifyWith((SecretKey) key())
-                .build()
-                .parseSignedClaims(token);
-
     }
 }
