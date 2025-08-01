@@ -35,4 +35,20 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
   }
+
+  /** Renvoie l’id présent dans le JWT, sinon null */
+  getUserId(): number | null {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log('Payload:', payload); // pour débogage
+      return payload.uid ?? null;
+    } catch {
+      return null;
+    }
+  }
 }
