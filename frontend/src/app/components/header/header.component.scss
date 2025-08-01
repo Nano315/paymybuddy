@@ -1,0 +1,45 @@
+/* Couleurs */
+$blue-primary: #207fee;
+$black-text: #000000;
+
+/* Conteneur */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 5rem;
+  background-color: #fff;
+}
+
+/* Logo */
+.logo {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: $black-text;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  /* Liens */
+  a {
+    color: $black-text;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $blue-primary;
+    }
+
+    &.active {
+      // route active
+      color: $blue-primary;
+    }
+  }
+}

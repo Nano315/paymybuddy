@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* Charge la police Inter depuis Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* Applique-la à toute l’app */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  line-height: 1.4;
+}

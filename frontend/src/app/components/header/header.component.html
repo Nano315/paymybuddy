@@ -1,0 +1,28 @@
+<header>
+  <a class="logo" routerLink="/transfer">Pay&nbsp;My&nbsp;Buddy</a>
+
+  <nav>
+    <a
+      routerLink="/transfer"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Transférer</a
+    >
+
+    <a
+      routerLink="/profile"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Profil</a
+    >
+
+    <a
+      routerLink="/relations"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Ajouter une relation</a
+    >
+
+    <a href="#" (click)="logout(); $event.preventDefault()">Se déconnecter</a>
+  </nav>
+</header>

@@ -23,4 +23,16 @@ export class AuthService {
   login(data: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/auth/login`, data);
   }
+
+  /** Retourne true si un JWT valide est présent */
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token; // pour l’instant : existence ­≥ connexion
+    /* plus tard : décoder le JWT et vérifier la date d’expiration */
+  }
+
+  /** Déconnexion */
+  logout(): void {
+    localStorage.removeItem('token');
+  }
 }
