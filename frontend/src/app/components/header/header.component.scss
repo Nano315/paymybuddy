@@ -13,8 +13,7 @@ header {
 
 /* Logo */
 .logo {
-  font-weight: 600;
-  font-size: 1.25rem;
+  font-weight: 500;
   color: $black-text;
   text-decoration: none;
   white-space: nowrap;
@@ -24,7 +23,7 @@ header {
 nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 3rem;
 
   /* Liens */
   a {
