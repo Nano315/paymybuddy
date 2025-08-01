@@ -1,1 +1,27 @@
-<p>login works!</p>
+<form [formGroup]="form" (ngSubmit)="login()" novalidate>
+  <!-- Mail -->
+  <div>
+    <label for="email">Mail</label>
+    <input id="email" type="email" formControlName="email" />
+    <small *ngIf="form.controls.email.touched && form.controls.email.invalid">
+      Adresse e-mail invalide
+    </small>
+  </div>
+
+  <!-- Mot de passe -->
+  <div>
+    <label for="password">Mot de passe</label>
+    <input id="password" type="password" formControlName="password" />
+    <small
+      *ngIf="form.controls.password.touched && form.controls.password.invalid"
+    >
+      Mot de passe requis
+    </small>
+  </div>
+
+  <!-- Bouton -->
+  <button type="submit" [disabled]="submitting">Se connecter</button>
+
+  <!-- Message d'erreur -->
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+</form>
