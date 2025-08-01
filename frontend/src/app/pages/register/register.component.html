@@ -1,0 +1,38 @@
+<form [formGroup]="form" (ngSubmit)="register()" novalidate>
+  <!-- Username -->
+  <div>
+    <label for="username">Username</label>
+    <input id="username" type="text" formControlName="username" />
+    <small
+      *ngIf="form.controls.username.touched && form.controls.username.invalid"
+    >
+      Le nom est requis (max 50 car.)
+    </small>
+  </div>
+
+  <!-- Mail -->
+  <div>
+    <label for="email">Mail</label>
+    <input id="email" type="email" formControlName="email" />
+    <small *ngIf="form.controls.email.touched && form.controls.email.invalid">
+      Adresse e-mail invalide
+    </small>
+  </div>
+
+  <!-- Mot de passe -->
+  <div>
+    <label for="password">Mot de passe</label>
+    <input id="password" type="password" formControlName="password" />
+    <small
+      *ngIf="form.controls.password.touched && form.controls.password.invalid"
+    >
+      Minimum 6 caractères
+    </small>
+  </div>
+
+  <!-- Bouton -->
+  <button type="submit" [disabled]="submitting">S’inscrire</button>
+
+  <!-- Feedback d’erreur -->
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+</form>
