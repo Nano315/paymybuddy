@@ -29,8 +29,17 @@ export class TransactionHistoryTableComponent implements OnInit {
       return;
     }
     this.currentId = id;
+    this.fetch();
+  }
 
-    this.txService.listByUser(id).subscribe({
+  /** public pour que le parent puisse rafraîchir */
+  public reload(): void {
+    this.fetch();
+  }
+
+  private fetch(): void {
+    this.loading = true;
+    this.txService.listByUser(this.currentId).subscribe({
       next: (list) => {
         this.transactions = list;
         this.loading = false;
@@ -42,10 +51,9 @@ export class TransactionHistoryTableComponent implements OnInit {
     });
   }
 
-  /** Nom de la “relation” : l’autre partie de la transaction */
   relationLabel(tx: TransactionDTO): string {
     return tx.senderId === this.currentId
-      ? `→ ${tx.receiverId}` // tu es l’émetteur
-      : `← ${tx.senderId}`; // tu es le receveur
+      ? `→ ${tx.receiverUsername}`
+      : `← ${tx.senderUsername}`;
   }
 }

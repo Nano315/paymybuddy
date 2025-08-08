@@ -1,1 +1,43 @@
-<app-transaction-history-table></app-transaction-history-table>
+<!-- Formulaire de paiement -->
+<form [formGroup]="form" (ngSubmit)="pay()" novalidate>
+  <!-- Sélectionner une relation -->
+  <div>
+    <select formControlName="receiverEmail">
+      <option value="" disabled selected hidden>
+        Sélectionner une relation
+      </option>
+      <option *ngFor="let u of relations" [value]="u.email">
+        {{ u.username }} ({{ u.email }})
+      </option>
+    </select>
+  </div>
+
+  <!-- Description -->
+  <div>
+    <input
+      type="text"
+      formControlName="description"
+      placeholder="Description"
+    />
+  </div>
+
+  <!-- Montant -->
+  <div>
+    <input
+      type="number"
+      formControlName="amount"
+      placeholder="Montant"
+      inputmode="decimal"
+      step="0.01"
+      min="0.01"
+    />
+  </div>
+
+  <!-- Bouton -->
+  <button type="submit" [disabled]="submitLoading">Payer</button>
+
+  <p *ngIf="submitError" style="color: red">{{ submitError }}</p>
+</form>
+
+<!-- Tableau des transactions -->
+<app-transaction-history-table #history></app-transaction-history-table>
