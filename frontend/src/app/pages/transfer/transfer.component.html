@@ -1,42 +1,32 @@
 <!-- Formulaire de paiement -->
-<form [formGroup]="form" (ngSubmit)="pay()" novalidate>
-  <!-- Sélectionner une relation -->
-  <div>
-    <select formControlName="receiverEmail">
-      <option value="" disabled selected hidden>
-        Sélectionner une relation
-      </option>
-      <option *ngFor="let u of relations" [value]="u.email">
-        {{ u.username }} ({{ u.email }})
-      </option>
-    </select>
-  </div>
+<form [formGroup]="form" (ngSubmit)="pay()" class="transfer-form" novalidate>
+  <select class="select-relation" formControlName="receiverEmail">
+    <option value="" disabled selected hidden>Sélectionner une relation</option>
+    <option *ngFor="let u of relations" [value]="u.email">
+      {{ u.username }} ({{ u.email }})
+    </option>
+  </select>
 
-  <!-- Description -->
-  <div>
-    <input
-      type="text"
-      formControlName="description"
-      placeholder="Description"
-    />
-  </div>
+  <input
+    class="input-desc"
+    type="text"
+    formControlName="description"
+    placeholder="Description"
+  />
 
-  <!-- Montant -->
-  <div>
-    <input
-      type="number"
-      formControlName="amount"
-      placeholder="Montant"
-      inputmode="decimal"
-      step="0.01"
-      min="0.01"
-    />
-  </div>
+  <input
+    class="input-amount"
+    type="number"
+    formControlName="amount"
+    placeholder="Montant"
+    inputmode="decimal"
+    step="0.01"
+    min="0.01"
+  />
 
-  <!-- Bouton -->
-  <button type="submit" [disabled]="submitLoading">Payer</button>
-
-  <p *ngIf="submitError" style="color: red">{{ submitError }}</p>
+  <button type="submit" class="pay-btn" [disabled]="submitLoading">
+    Payer
+  </button>
 </form>
 
 <!-- Tableau des transactions -->
