@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment.development';
@@ -13,5 +13,14 @@ export class ConnectionsService {
   /** Liste des relations d’un utilisateur */
   listForUser(userId: number): Observable<UserDTO[]> {
     return this.http.get<UserDTO[]>(`${this.base}/${userId}`);
+  }
+
+  /** Ajout d’une relation (retourne juste un code HTTP) */
+  add(userId: number, friendEmail: string): Observable<HttpResponse<void>> {
+    return this.http.post<void>(
+      this.base,
+      { userId, friendEmail },
+      { observe: 'response' }
+    );
   }
 }

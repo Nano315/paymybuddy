@@ -1,1 +1,19 @@
-<p>relations works!</p>
+<div class="relations-page">
+  <form [formGroup]="form" (ngSubmit)="add()" class="relations-form" novalidate>
+    <div class="field-group">
+      <label for="friendEmail">Chercher une relation</label>
+      <input
+        id="friendEmail"
+        type="email"
+        formControlName="friendEmail"
+        placeholder="Saisir une adresse mail"
+      />
+      <p *ngIf="success" class="msg success">{{ success }}</p>
+      <p *ngIf="error" class="msg error">{{ error }}</p>
+    </div>
+
+    <button type="submit" class="add-btn" [disabled]="submitting">
+      Ajouter
+    </button>
+  </form>
+</div>
