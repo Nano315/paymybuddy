@@ -53,7 +53,7 @@ export class TransactionHistoryTableComponent implements OnInit {
 
   relationLabel(tx: TransactionDTO): string {
     return tx.senderId === this.currentId
-      ? `→ ${tx.receiverUsername}`
-      : `← ${tx.senderUsername}`;
+      ? `${tx.receiverUsername}`
+      : `${tx.senderUsername}`;
   }
 }

@@ -1,22 +1,22 @@
 <div class="transaction-history-table">
-  <h2>Mes Transactions</h2>
+  <h2 class="title">Mes Transactions</h2>
 
   <div *ngIf="loading">Chargement…</div>
-  <p *ngIf="error" style="color: red">{{ error }}</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
 
-  <table *ngIf="!loading && !error">
+  <table *ngIf="!loading && !error" class="tx-table">
     <thead>
       <tr>
-        <th>Relation</th>
-        <th>Description</th>
-        <th style="text-align: right">Montant</th>
+        <th class="col-rel">Relation</th>
+        <th class="col-desc">Description</th>
+        <th class="col-amount">Montant</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let tx of transactions">
-        <td>{{ relationLabel(tx) }}</td>
-        <td>{{ tx.description }}</td>
-        <td style="text-align: right">{{ tx.amount | number : "1.2-2" }}€</td>
+        <td class="col-rel">{{ relationLabel(tx) }}</td>
+        <td class="col-desc">{{ tx.description }}</td>
+        <td class="col-amount">{{ tx.amount | number : "1.2-2" }}€</td>
       </tr>
     </tbody>
   </table>
