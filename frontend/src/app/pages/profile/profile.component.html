@@ -1,1 +1,48 @@
-<p>profile works!</p>
+<div *ngIf="loading">Chargement…</div>
+
+<div *ngIf="!loading">
+  <form [formGroup]="form" (ngSubmit)="onEditOrSave()" novalidate>
+    <!-- Username -->
+    <div>
+      <label>Username</label>
+      <ng-container *ngIf="!editing; else editUsername">
+        <span>{{ "@" + user.username }}</span>
+      </ng-container>
+      <ng-template #editUsername>
+        <input type="text" formControlName="username" placeholder="Username" />
+      </ng-template>
+    </div>
+
+    <!-- Mail -->
+    <div>
+      <label>Mail</label>
+      <ng-container *ngIf="!editing; else editEmail">
+        <span>{{ user.email }}</span>
+      </ng-container>
+      <ng-template #editEmail>
+        <input type="email" formControlName="email" placeholder="Mail" />
+      </ng-template>
+    </div>
+
+    <!-- Mot de passe -->
+    <div>
+      <label>Mot de passe</label>
+      <ng-container *ngIf="!editing; else editPassword">
+        <span>********</span>
+      </ng-container>
+      <ng-template #editPassword>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Nouveau mot de passe (optionnel)"
+        />
+      </ng-template>
+    </div>
+
+    <button type="submit" [disabled]="saving">
+      {{ editing ? "Enregistrer" : "Modifier" }}
+    </button>
+  </form>
+
+  <p *ngIf="error" style="color: red">{{ error }}</p>
+</div>
