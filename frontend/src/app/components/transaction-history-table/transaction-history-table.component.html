@@ -16,7 +16,14 @@
       <tr *ngFor="let tx of transactions">
         <td class="col-rel">{{ relationLabel(tx) }}</td>
         <td class="col-desc">{{ tx.description }}</td>
-        <td class="col-amount">{{ tx.amount | number : "1.2-2" }}€</td>
+        <td class="col-amount">
+          <ng-container *ngIf="tx.senderId === currentId; else incoming">
+            -{{ tx.amount | number : "1.2-2" }}€
+          </ng-container>
+          <ng-template #incoming>
+            +{{ tx.amount | number : "1.2-2" }}€
+          </ng-template>
+        </td>
       </tr>
     </tbody>
   </table>
