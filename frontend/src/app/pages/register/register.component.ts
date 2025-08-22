@@ -9,6 +9,7 @@ import { RegisterRequest } from '../../models/register-request.model';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
 })
