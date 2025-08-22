@@ -1,7 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="register()" novalidate>
   <!-- Username -->
   <div>
-    <label for="username">Username</label>
     <input id="username" type="text" formControlName="username" />
     <small
       *ngIf="form.controls.username.touched && form.controls.username.invalid"
@@ -12,7 +11,6 @@
 
   <!-- Mail -->
   <div>
-    <label for="email">Mail</label>
     <input id="email" type="email" formControlName="email" />
     <small *ngIf="form.controls.email.touched && form.controls.email.invalid">
       Adresse e-mail invalide
@@ -21,7 +19,6 @@
 
   <!-- Mot de passe -->
   <div>
-    <label for="password">Mot de passe</label>
     <input id="password" type="password" formControlName="password" />
     <small
       *ngIf="form.controls.password.touched && form.controls.password.invalid"

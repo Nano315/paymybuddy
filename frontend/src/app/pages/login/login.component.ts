@@ -10,6 +10,7 @@ import { AuthResponse } from '../../models/auth-response.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
 })

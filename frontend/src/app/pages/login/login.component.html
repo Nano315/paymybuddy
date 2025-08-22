@@ -1,27 +1,49 @@
-<form [formGroup]="form" (ngSubmit)="login()" novalidate>
-  <!-- Mail -->
-  <div>
-    <label for="email">Mail</label>
-    <input id="email" type="email" formControlName="email" />
-    <small *ngIf="form.controls.email.touched && form.controls.email.invalid">
-      Adresse e-mail invalide
-    </small>
+<div class="login-page">
+  <div class="login-card">
+    <h1 class="title">Pay My Buddy</h1>
+
+    <form [formGroup]="form" (ngSubmit)="login()" novalidate class="login-form">
+      <!-- Mail -->
+      <div class="field">
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Mail"
+        />
+        <small
+          *ngIf="form.controls.email.touched && form.controls.email.invalid"
+          class="hint error"
+        >
+          Adresse e-mail invalide
+        </small>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="field">
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Mot de passe"
+        />
+        <small
+          *ngIf="
+            form.controls.password.touched && form.controls.password.invalid
+          "
+          class="hint error"
+        >
+          Mot de passe requis
+        </small>
+      </div>
+
+      <!-- Bouton -->
+      <button type="submit" [disabled]="submitting" class="login-btn">
+        Se connecter
+      </button>
+
+      <!-- Message d'erreur -->
+      <p *ngIf="error" class="hint error">{{ error }}</p>
+    </form>
   </div>
-
-  <!-- Mot de passe -->
-  <div>
-    <label for="password">Mot de passe</label>
-    <input id="password" type="password" formControlName="password" />
-    <small
-      *ngIf="form.controls.password.touched && form.controls.password.invalid"
-    >
-      Mot de passe requis
-    </small>
-  </div>
-
-  <!-- Bouton -->
-  <button type="submit" [disabled]="submitting">Se connecter</button>
-
-  <!-- Message d'erreur -->
-  <p *ngIf="error" style="color: red">{{ error }}</p>
-</form>
+</div>
