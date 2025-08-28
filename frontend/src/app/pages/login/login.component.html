@@ -1,19 +1,34 @@
-<div class="login-page">
+<div class="login-page" role="main" aria-labelledby="page-title">
   <div class="login-card">
-    <h1 class="title">Pay My Buddy</h1>
+    <h1 class="title" id="page-title">Pay My Buddy</h1>
 
     <form [formGroup]="form" (ngSubmit)="login()" novalidate class="login-form">
       <!-- Mail -->
       <div class="field">
+        <label for="email" class="sr-only">Adresse e-mail</label>
         <input
           id="email"
           type="email"
           formControlName="email"
           placeholder="Mail"
+          autocomplete="email"
+          required
+          [attr.aria-invalid]="
+            form.controls.email.touched && form.controls.email.invalid
+              ? 'true'
+              : 'false'
+          "
+          [attr.aria-describedby]="
+            form.controls.email.touched && form.controls.email.invalid
+              ? 'email-error'
+              : null
+          "
         />
         <small
+          id="email-error"
           *ngIf="form.controls.email.touched && form.controls.email.invalid"
           class="hint error"
+          aria-live="polite"
         >
           Adresse e-mail invalide
         </small>
@@ -21,17 +36,32 @@
 
       <!-- Mot de passe -->
       <div class="field">
+        <label for="password" class="sr-only">Mot de passe</label>
         <input
           id="password"
           type="password"
           formControlName="password"
           placeholder="Mot de passe"
+          autocomplete="current-password"
+          required
+          [attr.aria-invalid]="
+            form.controls.password.touched && form.controls.password.invalid
+              ? 'true'
+              : 'false'
+          "
+          [attr.aria-describedby]="
+            form.controls.password.touched && form.controls.password.invalid
+              ? 'password-error'
+              : null
+          "
         />
         <small
+          id="password-error"
           *ngIf="
             form.controls.password.touched && form.controls.password.invalid
           "
           class="hint error"
+          aria-live="polite"
         >
           Mot de passe requis
         </small>
@@ -43,7 +73,9 @@
       </button>
 
       <!-- Message d'erreur -->
-      <p *ngIf="error" class="hint error">{{ error }}</p>
+      <p *ngIf="error" class="hint error" role="alert" aria-live="assertive">
+        {{ error }}
+      </p>
     </form>
   </div>
 </div>
