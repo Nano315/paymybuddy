@@ -1,20 +1,43 @@
 <!-- Formulaire de paiement -->
 <form [formGroup]="form" (ngSubmit)="pay()" class="transfer-form" novalidate>
-  <select class="select-relation" formControlName="receiverEmail">
+  <!-- Relation -->
+  <label for="receiverEmail" class="sr-only">Sélectionner une relation</label>
+  <select
+    id="receiverEmail"
+    class="select-relation"
+    formControlName="receiverEmail"
+    required
+    [attr.aria-invalid]="
+      form.controls.receiverEmail.touched && form.controls.receiverEmail.invalid
+        ? 'true'
+        : 'false'
+    "
+  >
     <option value="" disabled selected hidden>Sélectionner une relation</option>
     <option *ngFor="let u of relations" [value]="u.email">
       {{ u.username }} ({{ u.email }})
     </option>
   </select>
 
+  <!-- Description -->
+  <label for="description" class="sr-only">Description</label>
   <input
+    id="description"
     class="input-desc"
     type="text"
     formControlName="description"
     placeholder="Description"
+    [attr.aria-invalid]="
+      form.controls.description.touched && form.controls.description.invalid
+        ? 'true'
+        : 'false'
+    "
   />
 
+  <!-- Montant -->
+  <label for="amount" class="sr-only">Montant</label>
   <input
+    id="amount"
     class="input-amount"
     type="number"
     formControlName="amount"
@@ -22,6 +45,12 @@
     inputmode="decimal"
     step="0.01"
     min="0.01"
+    required
+    [attr.aria-invalid]="
+      form.controls.amount.touched && form.controls.amount.invalid
+        ? 'true'
+        : 'false'
+    "
   />
 
   <button type="submit" class="pay-btn" [disabled]="submitLoading">
