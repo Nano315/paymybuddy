@@ -1,6 +1,6 @@
-<div class="login-page">
+<div class="login-page" role="main" aria-labelledby="page-title">
   <div class="login-card">
-    <h1 class="title">Pay My Buddy</h1>
+    <h1 class="title" id="page-title">Pay My Buddy</h1>
 
     <form
       [formGroup]="form"
@@ -10,17 +10,32 @@
     >
       <!-- Username -->
       <div class="field">
+        <label for="username" class="sr-only">Username</label>
         <input
           id="username"
           type="text"
           formControlName="username"
           placeholder="Username"
+          autocomplete="username"
+          [attr.aria-invalid]="
+            form.controls.username.touched && form.controls.username.invalid
+              ? 'true'
+              : 'false'
+          "
+          [attr.aria-describedby]="
+            form.controls.username.touched && form.controls.username.invalid
+              ? 'username-error'
+              : null
+          "
+          required
         />
         <small
+          id="username-error"
           *ngIf="
             form.controls.username.touched && form.controls.username.invalid
           "
           class="hint error"
+          aria-live="polite"
         >
           Le nom est requis (max 50 car.)
         </small>
@@ -28,15 +43,30 @@
 
       <!-- Mail -->
       <div class="field">
+        <label for="email" class="sr-only">Adresse e-mail</label>
         <input
           id="email"
           type="email"
           formControlName="email"
           placeholder="Mail"
+          autocomplete="email"
+          [attr.aria-invalid]="
+            form.controls.email.touched && form.controls.email.invalid
+              ? 'true'
+              : 'false'
+          "
+          [attr.aria-describedby]="
+            form.controls.email.touched && form.controls.email.invalid
+              ? 'email-error'
+              : null
+          "
+          required
         />
         <small
+          id="email-error"
           *ngIf="form.controls.email.touched && form.controls.email.invalid"
           class="hint error"
+          aria-live="polite"
         >
           Adresse e-mail invalide
         </small>
@@ -44,17 +74,20 @@
 
       <!-- Mot de passe -->
       <div class="field">
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="Mot de passe"
-        />
+        <label for="password" class="sr-only">Mot de passe</label>
+        <input id="password" type="password" formControlName="password"
+        placeholder="Mot de passe" autocomplete="new-password"
+        [attr.aria-invalid]="form.controls.password.touched &&
+        form.controls.password.invalid ? 'true' : 'false'"
+        [attr.aria-describedby]="form.controls.password.touched &&
+        form.controls.password.invalid ? 'password-error' : null" required />
         <small
+          id="password-error"
           *ngIf="
             form.controls.password.touched && form.controls.password.invalid
           "
           class="hint error"
+          aria-live="polite"
         >
           Minimum 6 caractères
         </small>
@@ -66,7 +99,9 @@
       </button>
 
       <!-- Feedback d’erreur -->
-      <p *ngIf="error" class="hint error">{{ error }}</p>
+      <p *ngIf="error" class="hint error" role="alert" aria-live="assertive">
+        {{ error }}
+      </p>
     </form>
   </div>
 </div>

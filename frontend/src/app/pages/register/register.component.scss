@@ -22,7 +22,7 @@
   width: 214px;
   padding: 18px 16px;
   background: #f69f1d;
-  color: #fff;
+  color: black;
   border-radius: 8px;
   font-weight: 600;
   font-size: 24px;
@@ -93,4 +93,16 @@ input:focus {
 }
 .error {
   color: #c62828;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
