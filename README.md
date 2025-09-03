@@ -6,7 +6,6 @@ Ce repository contient :
 - l’**application back-end** (Java / Spring Boot) avec couche DAL/référentiel, gestion des transactions et connexion sécurisée à la BDD,
 - l’**application front-end** (Angular) basée sur les maquettes et consommant la DAL via l’API.
 
-## 🧩 Modèle physique de données (MPD)
+## Modèle physique de données (MPD)
 
-### Vue image
 ![MPD](docs/MPD.png)
