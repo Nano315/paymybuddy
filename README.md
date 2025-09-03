@@ -11,3 +11,7 @@ Ce repository contient :
 ![MPD](docs/MPD.png)
 
 Disponible dans docs/MPD.png
+
+## Script SQL
+
+Disponible dans backend/db/01_schema.sql
